@@ -1,0 +1,26 @@
+{
+  "name": "expressclasswork",
+  "version": "1.0.0",
+  "description": "4.a.e Express Authentication page",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/milomacphail/expressclasswork.git"
+  },
+  "author": "Milo MacPhail",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milomacphail/expressclasswork/issues"
+  },
+  "homepage": "https://github.com/milomacphail/expressclasswork#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "nodemon": "^1.18.4",
+    "passport-local": "^1.0.0"
+  }
+}
