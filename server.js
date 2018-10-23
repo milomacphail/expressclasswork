@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const parseUrlEncoded = bodyParser.urlencoded({extended: false});
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
 
 //create a get route that displays your personal name.
 app.get('/self', (request, response) => response.send("<h1>Milo MacPhail</h1>"));
@@ -32,11 +34,28 @@ app.post('/login', (req, res) => {
     }
 });
 
-app.post('/data', (req, res) =>{
-  const myArray = ["Milo", "is", "struggling"]
-  
-})
+const myArray = [{item: "Milo"},{item:"is"},{item: "struggling"}]
 
+app.post(`/color/:item`, (req,res, next) => {
+ const item = req.params.item;
+ const addStress = stress.indexOf(item);
+
+ if(addStress == -1) { //if item not in array, add item to array
+   color.push(item);
+   res.status(202).json(`Yurgh, ${item}!`);
+ } else {
+   res.status(409).json(`Error 409, ${item} already exists`); //use different status code
+
+   next();
+ }
+
+});
+
+
+app.delete('/data/:item', (req, res, next) => {
+  console.log(req.params.item);
+  res.send({type: "DELETE"});
+})
 
 
 const port = process.env.PORT || 5000;
