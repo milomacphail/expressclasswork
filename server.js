@@ -36,40 +36,35 @@ app.post('/login', (req, res) => {
 
 const stresses = [{item: "Milo"},{item:"is"},{item: "struggling"}]
 
-app.post('/addStress/:item', (req, res) => {
+app.post('/stress/:item', (req, res, next) => {
    var item = req.params.item;
-   var place = stress.indexOf(item);
+   var place = stresses.indexOf(item);
 
    // item is not already in the array, add it to array
-   if(place == -1) {
+   if(place === -1) {
         stresses.push(item);
-        console.log(stresses);
-  // res.json(myArray);
-        res.json('WOOF, ' + item + '!');
+        res.status(202).json(`WOOF, ${item}!`);
    } else {
        // status 409 --> conflict
-       res.status(409).json({message: `${item} already exists in the array`});
+       res.status(409).json(`${item} already exists in the array`);
+       next();
    }
 });
 
 // create a DELETE request with item attribute
-app.delete('/deleteStress/:item', (req, res) => {
-   var item = req.params.item;
-   
-   var location = myArray.indexOf(item);
-   console.log(location);
-   
+app.delete('/stress/:item', (req, res, next) => {
+   const item = req.params.item;
+   const place = stresses.indexOf(item);
+   console.log(place);
    // if item exists, delete
-   if (location != -1) {
-       stresses.splice(location, 1);
-       res.json(stresses);
-       
+   if (place != -1) {
+       stresses.splice(place, 1);
+       res.json(`Whew! No more ${item}`);
    } else {
        // status 404 --> not found
        res.status(404).json('The item you want to delete is not present');
+       next();
    }
-   
-    
 });
 
 
