@@ -34,14 +34,14 @@ app.post('/login', (req, res) => {
     }
 });
 
-const stresses = [{item: "Milo"},{item:"is"},{item: "struggling"}]
+const stresses = ["Milo","is","struggling"];
 
-app.post('/stress/:item', (req, res, next) => {
+app.post('/stresses/:item', (req, res, next) => {
    var item = req.params.item;
-   var place = stresses.indexOf(item);
+   var stress = stresses.indexOf(item);
 
    // item is not already in the array, add it to array
-   if(place === -1) {
+   if(stress === -1) {
         stresses.push(item);
         res.status(202).json(`WOOF, ${item}!`);
    } else {
@@ -52,12 +52,12 @@ app.post('/stress/:item', (req, res, next) => {
 });
 
 // create a DELETE request with item attribute
-app.delete('/stress/:item', (req, res, next) => {
+app.delete('/stresses/:item', (req, res, next) => {
    const item = req.params.item;
-   const place = stresses.indexOf(item);
-   console.log(place);
+   const stress = stresses.indexOf(item);
+   console.log(stress);
    // if item exists, delete
-   if (place != -1) {
+   if (stress != -1) {
        stresses.splice(place, 1);
        res.json(`Whew! No more ${item}`);
    } else {
