@@ -2,7 +2,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const parseUrlEncoded = bodyParser.urlencoded({extended: false});
-app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(parseUrlEncoded);
 app.use(bodyParser.json());
 
 
@@ -16,17 +17,20 @@ app.get('/greeting/:name', (req, res) => {
 });
 
 app.get('/math', (req, res) => {
-    const num1 = parseInt(req.query.num1, 10);
-    const num2 = parseInt(req.query.num2, 10);
-    const ending = (req.query.ending)
-    res.send(`<h1>The answer to ${num1} plus ${num2} is ${num1 + num2}, ${ending}.</h1>`)
+    if (req.query.name !== undefined){
+        res.send(req.query.name.split('').join('-'));    
+    } else {
+       const const1 = parseInt(req.query.const1, 10)
+       const const2 = parseInt(req.query.const2, 10)
+    res.send(`<h1>The answer to ${const1} plus ${const2} is ${const1 + const2}.</h1>`);
+    }
 });
 
 
 app.post('/login', (req, res) => {
     const pw = req.body.pw;
     const username = req.body.username;
-    if (username === "Password" & pw === "Username") {
+    if (username === "Password" && pw === "Username") {
         res.status(200);
         res.json("Logged in");
     } else {
@@ -58,7 +62,7 @@ app.delete('/stresses/:item', (req, res, next) => {
    console.log(stress);
    // if item exists, delete
    if (stress != -1) {
-       stresses.splice(place, 1);
+       stresses.splice(stress, 1);
        res.json(`Whew! No more ${item}`);
    } else {
        // status 404 --> not found
